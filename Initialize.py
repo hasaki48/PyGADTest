@@ -103,12 +103,14 @@ def initGA(_MudNum, _ConsumpNum, _iteratorNum, _chromosomeNum, _copyproportion):
     # * 初始化渣场集合
     global Mud, MudNum
     MudList = initRandomArray(MudNum, MudRange)
-    Mud = [x / 100 for x in MudList]  # 归一化处理
+    # Mud = [x / 100 for x in MudList]  # 归一化处理
+    Mud = MudList
 
     # * 初始化中转场、受纳场集合
     global ConsumpCap, ConsumpNum
     ConsumpCapList = initRandomArray(ConsumpNum, ConsumpCapRange)
-    ConsumpCap = [x / 100 for x in ConsumpCapList]  # 归一化处理
+    # ConsumpCap = [x / 100 for x in ConsumpCapList]  # 归一化处理
+    ConsumpCap = ConsumpCapList
 
     # * 时间、经济成本矩阵初始化
     global TimeCostMatrix, EconomicCostMatrix

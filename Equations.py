@@ -6,6 +6,7 @@
 '''
 # *@author:Hasaki48
 # *@date  :2022-05-28
+import copy
 import numpy as np
 import Initialize
 
@@ -62,7 +63,7 @@ def RandomUsingSVD(eps=1e-15):
             condition_array.append(1)
     # print(condition_array)
     common_solutions = np.compress(condition_array, vt, axis=0)
-    return common_solutions.shape[0]
+    chromosome_length = common_solutions.shape[0]
 
 
 """
@@ -99,3 +100,32 @@ def InitializeMatrix(Matrix):
 def Jump(Row, Start, Num, Step=1):
     for i in range(Num):
         Row[Start + i * Step] = 1
+
+
+"""
+根据成本矩阵和线性方程组的解计算当代染色体的运输成本
+@param chromosome 染色体
+@return EconomicCost 一个染色体花费的成本
+"""
+
+
+def calCost(chromosome):
+    global common_solutions
+    chromosome = np.array(chromosome)
+    # ? 通解*不同的系数 + 特解 = 方程组的一个解
+    solution = np.zeros(common_solutions[0].shape[0])
+    now_cn_solution = copy.deepcopy(common_solutions)
+    for i in range(chromosome_length):
+        now_cn_solution[i] = now_cn_solution[i] * chromosome[i]
+        solution += now_cn_solution[i]
+    solution += special_solution
+
+    # * 转换一下成本矩阵的格式以便后续计算
+    EconomicVector = np.asarray(Initialize.EconomicCostMatrix).reshape(
+        Initialize.ConsumpNum * (Initialize.MudNum + 1),) * solution
+
+    # * 这里的成本计算需要使用绝对值，不然会出现极大负值的情况
+    EconomicCost = 0
+    for _ in range(len(EconomicVector)):
+        EconomicCost += abs(EconomicVector[_])
+    return EconomicCost
