@@ -16,7 +16,7 @@ import Initialize
 
 def fitness_func(solution, solution_idx):
     cost = Equations.calCost(solution)
-    fitness = 1.0 / cost
+    fitness = 100000.0 / cost
     return fitness
 
 
@@ -25,18 +25,19 @@ def GASearch():
     sol_per_pop = 200
     num_genes = Equations.chromosome_length
 
-    init_range_low = -100
-    init_range_high = 100
+    init_range_low = -np.linalg.norm(Equations.b)
+    init_range_high = np.linalg.norm(Equations.b)
 
     # mutation_percent_genes =
 
-    ga_instance = pygad.GA(num_generations=1000,
+    ga_instance = pygad.GA(num_generations=10000,
                            num_parents_mating=20,
                            fitness_func=fitness_func,
                            sol_per_pop=sol_per_pop,
                            num_genes=num_genes,
                            init_range_low=init_range_low,
                            init_range_high=init_range_high,
+                           mutation_probability=0.1
                            )
 
     ga_instance.run()
@@ -46,7 +47,7 @@ def GASearch():
     print("Parameters of the best solution : {solution}".format(
         solution=solution))
     print("Cost of the best solution = {solution_fitness}".format(
-        solution_fitness=1.0 / solution_fitness))
+        solution_fitness=100000.0 / solution_fitness))
     print("Index of the best solution : {solution_idx}".format(
         solution_idx=solution_idx))
     ShowData(solution)

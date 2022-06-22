@@ -13,6 +13,18 @@ from typing import List
 import numpy as np
 
 """
+向量归一化
+@param vector 需要归一化的向量
+@return normalized_vector 归一化后的向量
+"""
+
+
+def normalize(vector):
+    normalized_vector = vector / np.linalg.norm(vector)
+    return normalized_vector
+
+
+"""
 创建随机数组
 @param length 数组长度
 @param range 数组取值范围

@@ -9,6 +9,7 @@
 import copy
 import numpy as np
 import Initialize
+from common import normalize
 
 # 当前层的系数矩阵
 A = 0
@@ -63,6 +64,7 @@ def RandomUsingSVD(eps=1e-15):
             condition_array.append(1)
     # print(condition_array)
     common_solutions = np.compress(condition_array, vt, axis=0)
+    common_solutions = normalize(common_solutions)
     chromosome_length = common_solutions.shape[0]
 
 

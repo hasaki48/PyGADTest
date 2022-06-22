@@ -13,7 +13,7 @@ from random import Random
 
 import numpy as np
 
-from common import initRandomArray, initRandomMatrix
+from common import initRandomArray, initRandomMatrix, normalize
 
 # 渣土集合(Mud[i]表示第i个渣场产生的渣土量)
 Mud = [50, 60, 30, 40, 70]  # 设定为特殊值[50,60,30,40,70]
@@ -103,13 +103,18 @@ def initGA(_MudNum, _ConsumpNum, _iteratorNum, _chromosomeNum, _copyproportion):
     # * 初始化渣场集合
     global Mud, MudNum
     MudList = initRandomArray(MudNum, MudRange)
-    # Mud = [x / 100 for x in MudList]  # 归一化处理
-    Mud = MudList
 
     # * 初始化中转场、受纳场集合
     global ConsumpCap, ConsumpNum
     ConsumpCapList = initRandomArray(ConsumpNum, ConsumpCapRange)
-    # ConsumpCap = [x / 100 for x in ConsumpCapList]  # 归一化处理
+
+    # MudArray = np.asarray(MudList)
+    # ConsumpCapArray = np.asarray(ConsumpCapList)
+    # b = np.append(MudArray, ConsumpCapArray)
+    # b_norm = np.linalg.norm(b)
+    # Mud = [x / b_norm for x in MudList]  # 归一化处理
+    Mud = MudList
+    # ConsumpCap = [x / b_norm for x in ConsumpCapList]  # 归一化处理
     ConsumpCap = ConsumpCapList
 
     # * 时间、经济成本矩阵初始化
