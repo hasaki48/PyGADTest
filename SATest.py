@@ -24,13 +24,13 @@ def fitness_func(x):
 
 
 def SASearch():
-    Equations.RandomUsingSVD()
+    Equations.RandomUsingSimple()
     b_norm = np.linalg.norm(Equations.b)
 
     initial_x = np.random.randint(-b_norm, b_norm,
                                   size=(Equations.chromosome_length,))
-    sa = SA(func=fitness_func, x0=initial_x, T_max=100,
-            T_min=1e-9, L=500, max_stay_counter=300)
+    sa = SA(func=fitness_func, x0=initial_x, T_max=300,
+            T_min=1e-9, L=2000, max_stay_counter=300)
     best_x, best_y = sa.run()
     print('best_x', best_x, "min_cost", best_y)
     plt.plot(pd.DataFrame(sa.best_y_history).cummin(axis=0))

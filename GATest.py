@@ -16,28 +16,31 @@ import Initialize
 
 def fitness_func(solution, solution_idx):
     cost = Equations.calCost(solution)
-    fitness = 100000.0 / cost
+    fitness = 100000/cost
     return fitness
 
 
 def GASearch():
-    Equations.RandomUsingSVD()
+    Equations.RandomUsingSimple()
     sol_per_pop = 200
     num_genes = Equations.chromosome_length
 
-    init_range_low = -np.linalg.norm(Equations.b)
-    init_range_high = np.linalg.norm(Equations.b)
+    init_range_low = -100
+    init_range_high = 100
 
     # mutation_percent_genes =
 
-    ga_instance = pygad.GA(num_generations=10000,
+    ga_instance = pygad.GA(num_generations=30000,
                            num_parents_mating=20,
                            fitness_func=fitness_func,
                            sol_per_pop=sol_per_pop,
                            num_genes=num_genes,
                            init_range_low=init_range_low,
                            init_range_high=init_range_high,
-                           mutation_probability=0.1
+                           mutation_probability=0.1,
+                           parent_selection_type="sss",
+                           crossover_type="scattered",
+                           mutation_type="random"
                            )
 
     ga_instance.run()

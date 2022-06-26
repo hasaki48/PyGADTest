@@ -23,7 +23,7 @@ def fitness_func(x):
 
 
 def PAOSearch():
-    Equations.RandomUsingSVD()
+    Equations.RandomUsingSimple()
     b_norm = np.linalg.norm(Equations.b)
     lb = [-b_norm] * Equations.chromosome_length
     ub = [b_norm] * Equations.chromosome_length
