@@ -25,8 +25,9 @@ def GASearch():
     sol_per_pop = 200
     num_genes = Equations.chromosome_length
 
-    init_range_low = -100
-    init_range_high = 100
+    b_norm = np.linalg.norm(Equations.b)
+    init_range_low = -10
+    init_range_high = 10
 
     # mutation_percent_genes =
 
