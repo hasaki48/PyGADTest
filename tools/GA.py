@@ -26,8 +26,8 @@ def GASearch():
     num_genes = Equations.chromosome_length
 
     b_norm = np.linalg.norm(Equations.b)
-    init_range_low = -10
-    init_range_high = 10
+    init_range_low = -100
+    init_range_high = 100
 
     # mutation_percent_genes =
 

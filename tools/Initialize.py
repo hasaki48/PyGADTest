@@ -15,6 +15,8 @@ import numpy as np
 
 from common import initRandomArray, initRandomMatrix, normalize
 
+import Parameters
+
 # 渣土集合(Mud[i]表示第i个渣场产生的渣土量)
 Mud = [50, 60, 30, 40, 70]  # 设定为特殊值[50,60,30,40,70]
 # 渣场数量
@@ -102,7 +104,7 @@ def initGA(_MudNum, _ConsumpNum, _iteratorNum, _chromosomeNum, _copyproportion):
 
     # * 初始化渣场集合
     global Mud, MudNum
-    MudList = initRandomArray(MudNum, MudRange)
+    # MudList = initRandomArray(MudNum, MudRange)
 
     # * 初始化中转场、受纳场集合
     global ConsumpCap, ConsumpNum
@@ -113,15 +115,16 @@ def initGA(_MudNum, _ConsumpNum, _iteratorNum, _chromosomeNum, _copyproportion):
     # b = np.append(MudArray, ConsumpCapArray)
     # b_norm = np.linalg.norm(b)
     # Mud = [x / b_norm for x in MudList]  # 归一化处理
-    Mud = MudList
+    Mud = Parameters.MudList
     # ConsumpCap = [x / b_norm for x in ConsumpCapList]  # 归一化处理
-    ConsumpCap = ConsumpCapList
+    ConsumpCap = Parameters.ConsumpCapList
 
     # * 时间、经济成本矩阵初始化
     global TimeCostMatrix, EconomicCostMatrix
     TimeCostMatrix = initRandomMatrix(MudNum, ConsumpNum, TimeRange)
     TimeCostMatrix.append([0 for _ in range(ConsumpNum)])
-    EconomicCostMatrix = initRandomMatrix(MudNum, ConsumpNum, EconomicRange)
+    # EconomicCostMatrix = initRandomMatrix(MudNum, ConsumpNum, EconomicRange)
+    EconomicCostMatrix = Parameters.EconomicCostMatrix
     EconomicCostMatrix.append([0 for _ in range(ConsumpNum)])
 
 
