@@ -108,7 +108,7 @@ def initGA(_MudNum, _ConsumpNum, _iteratorNum, _chromosomeNum, _copyproportion):
 
     # * 初始化中转场、受纳场集合
     global ConsumpCap, ConsumpNum
-    ConsumpCapList = initRandomArray(ConsumpNum, ConsumpCapRange)
+    # ConsumpCapList = initRandomArray(ConsumpNum, ConsumpCapRange)
 
     # MudArray = np.asarray(MudList)
     # ConsumpCapArray = np.asarray(ConsumpCapList)
@@ -121,8 +121,8 @@ def initGA(_MudNum, _ConsumpNum, _iteratorNum, _chromosomeNum, _copyproportion):
 
     # * 时间、经济成本矩阵初始化
     global TimeCostMatrix, EconomicCostMatrix
-    TimeCostMatrix = initRandomMatrix(MudNum, ConsumpNum, TimeRange)
-    TimeCostMatrix.append([0 for _ in range(ConsumpNum)])
+    # TimeCostMatrix = initRandomMatrix(MudNum, ConsumpNum, TimeRange)
+    # TimeCostMatrix.append([0 for _ in range(ConsumpNum)])
     # EconomicCostMatrix = initRandomMatrix(MudNum, ConsumpNum, EconomicRange)
     EconomicCostMatrix = Parameters.EconomicCostMatrix
     EconomicCostMatrix.append([0 for _ in range(ConsumpNum)])
