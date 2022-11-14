@@ -48,6 +48,10 @@ begin
     -- 结束于第几周
     select @StartWeek = DATENAME(WEEK,@BeginChar), @StartWeekDay = DATEPART(DW,@BeginChar),
         @EndWeek = DATENAME(WEEK,@EndChar), @EndWeekDay = DATEPART(DW,@EndChar)
+    print @StartWeek
+    print @StartWeekDay
+    print @EndWeek
+    print @EndWeekDay
     declare @LoopSum int
     -- 有多少周就循环多少次
     set @LoopSum = CAST(@EndWeek as int) - CAST(@StartWeek as int)
