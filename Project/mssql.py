@@ -10,6 +10,7 @@
 import PeriodConfig
 import pyodbc
 import datetime
+import CommonSQL
 
 
 TimeConfig = {"BeginChar": '\'2021-06-01\'', "EndChar": '\'2021-08-01\'',
@@ -31,11 +32,13 @@ def ServerConnection():
 # row = cursor.fetchone()
 
 
-def program():
+def GetMudData():
     Connection = ServerConnection()
     cursor = Connection.cursor()
-    cursor.execute(PeriodConfig.CheckExists)  # 检查WeekPlan表是否存在，存在即删除
+    cursor.execute(CommonSQL.CheckExists.format(
+        TableName="WeekPlan"))  # 检查WeekPlan表是否存在，存在即删除
     Connection.commit()
+    cursor.execute(CommonSQL.CheckExists.format(TableName="Distance"))
     cursor.execute(PeriodConfig.SelInto.format(
         **TimeConfig))  # Select into WeekPlan表
     Connection.commit()
@@ -60,7 +63,7 @@ def program():
 
             rows = cursor.execute(PeriodConfig.SQL.format(
                 StartDateOfWeek=StartDateOfWeek, EndDateOfWeek=EndDateOfWeek)).fetchall()
-            print(rows)
+            yield rows
             continue
         if(LoopCount == LoopSum):  # 如果是最后一周
             StartDateOfWeek = (BeginDate +
@@ -70,7 +73,7 @@ def program():
             LoopCount += 1
             rows = cursor.execute(PeriodConfig.SQL.format(
                 StartDateOfWeek=StartDateOfWeek, EndDateOfWeek=EndDateOfWeek)).fetchall()
-            print(rows)
+            yield rows
             continue
         # 其余无特殊情况
         StartDateOfWeek = (BeginDate +
@@ -82,7 +85,16 @@ def program():
         LoopCount += 1
         rows = cursor.execute(PeriodConfig.SQL.format(
             StartDateOfWeek=StartDateOfWeek, EndDateOfWeek=EndDateOfWeek)).fetchall()
-        print(rows)
+        yield rows
+
+
+def program():
+    try:
+        Data = GetMudData()
+        while True:
+            print(next(Data))
+    except(StopIteration):
+        print("Close")
 
 
 if __name__ == '__main__':
